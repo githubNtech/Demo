@@ -11,14 +11,6 @@
       key: NewGuestName
       value: ntechguest
       
-  - name: Renombrar cuentas de administrador
-    tags: Control de Acceso - Usuarios
-    win_security_policy:
-      section: System Access
-      key: NewAdministratorName
-      value: ntechadmin
-
-
   - name: Estatus de cuentas de invitado
     tags: Control de Acceso - Usuarios
     win_security_policy:
@@ -89,13 +81,6 @@
       key: LockoutDuration
       value: 30
 
-  - name: Tipos de cifrado permitidos para kerberos
-    tags: Autenticacion segura
-    win_security_policy:
-      section: Registry Values
-      key: MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters\SupportedEncryptionTypes
-      value: 4,24
-
   - name: Límite de inactividad de la máquina
     tags: Bloqueo de pantallas y sesiones
     win_security_policy:
@@ -125,14 +110,6 @@
       - ntechguest
       action: set
 
-  - name: Negar inicio de sesión localmente
-    tags: Control de acceso (roles, perfiles y privilegios)
-    win_user_right:
-      name: SeDenyInteractiveLogonRight
-      users:
-      - ntechguest
-      action: set
-
   - name: Permitir inicio de sesión localmente
     tags: Acceso Remoto (usuarios y autenticación)
     win_user_right:
@@ -141,120 +118,53 @@
       - Administrador
       action: set
 
-#    - name: Negar inicio de sesión a través de escritorio remoto
-#      tags: Acceso Remoto (usuarios y autenticación)
-#      win_user_right:
-#        name: SeDenyRemoteInteractiveLogonRight
-#        users:
-#        - Guests
-#        - 'Local account'
-#        - SERVICE
-#        - 'LOCAL SERVICE'
-#        action: set
 
   - name: Iniciar sesión a través de servicios de escritorio remoto
     tags: Acceso Remoto (usuarios y autenticación)
     win_user_right:
       name: SeRemoteInteractiveLogonRight
       users:
-      - Administrador
-#      - 'Remote Desktop Users'
+      - Administrator
+      - 'Remote Desktop Users'
       action: set
 
-#  - name: Estado del firewall
-#    tags: Protección de red (FW/HIPS)
-#    win_firewall:
-#      state: enabled
-#      profiles:
-#      - Domain
-#      - Private
-#      - Public
 
-#    - name: Bitácoras de auditoría (Eventos de sistemas)
-#      tags: Bitácoras de seguridad
-#      community.windows.win_security_policy:
-#        section: Event Audit
-#        key: AuditSystemEvents
-#        value: 1
+  - name: Bitácoras de auditoría (Eventos de sistemas)
+    tags: Bitácoras de seguridad
+    win_security_policy:
+      section: Event Audit
+      key: AuditSystemEvents
+      value: 1
 
-#    - name: Bitácoras de auditoría (Acceso a objetos)
-#      tags: Bitácoras de seguridad
-#      community.windows.win_security_policy:
-#        section: Event Audit
-#        key: AuditObjectAccess
-#        value: 1
+  - name: Bitácoras de auditoría (Acceso a objetos)
+    tags: Bitácoras de seguridad
+    win_security_policy:
+      section: Event Audit
+      key: AuditObjectAccess
+      value: 1
 
-#    - name: Bitácoras de auditoría (Acceso a servicios de directorio)
-#      tags: Bitácoras de seguridad
-#      community.windows.win_security_policy:
-#        section: Event Audit
-#        key: AuditDSAccess
-#        value: 1
 
-#    - name: Bitácoras de auditoría (Cambio de directivas)
-#      tags: Bitácoras de seguridad
-#      community.windows.win_security_policy:
-#        section: Event Audit
-#        key: AuditPolicyChange
-#        value: 1
+  - name: Bitácoras de auditoría (Eventos de inicio de sesion)
+    tags: Bitácoras de seguridad
+    win_security_policy:
+      section: Event Audit
+      key: AuditLogonEvents
+      value: 1
 
-#    - name: Bitácoras de auditoría (Eventos de inicio de sesion)
-#      tags: Bitácoras de seguridad
-#      community.windows.win_security_policy:
-#        section: Event Audit
-#        key: AuditLogonEvents
-#        value: 1
-
-#    - name: Bitácoras de auditoría (Eventos de inicio de sesion a cuentas)
-#      tags: Bitácoras de seguridad
-#      community.windows.win_security_policy:
-#        section: Event Audit
-#        key: AuditAccountLogon
-#        value: 1
-
-#    - name: Bitácoras de auditoría (Administracion de cuentas)
-#      tags: Bitácoras de seguridad
-#      community.windows.win_security_policy:
-#        section: Event Audit
-#        key: AuditAccountManage
-#        value: 1
-
+  - name: Bitácoras de auditoría (Eventos de inicio de sesion a cuentas)
+    tags: Bitácoras de seguridad
+    win_security_policy:
+      section: Event Audit
+      key: AuditAccountLogon
+      value: 1
   
 
-#    - name: Asegúrese de que 'Enable Windows NTP Client' esté configurado en 'Habilitado'
-#      tags: Configuraciones de sincronización de tiempo
-#      ansible.windows.win_regedit:
-#        path: HKLM:\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\NtpClient
-#        name: Enabled
-#        data: 1
-#        type: dword
+  - name: Asegúrese de que 'Enable Windows NTP Client' esté configurado en 'Habilitado'
+    tags: Configuraciones de sincronización de tiempo
+    win_regedit:
+      path: HKLM:\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\NtpClient
+      name: Enabled
+      data: 1
+      type: dword
 
-#    - name: Cambiar tiempo del sistema
-#      tags: Configuraciones de sincronización de tiempo
-#      ansible.windows.win_user_right:
-#        name: SeSystemtimePrivilege
-#        users:
-#        - Administrators
-#        - 'LOCAL SERVICE'
-#        action: set
-      
-#    - name: Apagar el sistema
-#      tags: Directrices de apagado de sistema
-#      ansible.windows.win_user_right:
-#        name: SeShutdownPrivilege
-#        users:
-#        - Administrators
-#        action: set
-      
-#    - name: Permitir que el sistema se apague sin tener que iniciar sesión
-#      tags: Directrices de apagado de sistema
-#      community.windows.win_security_policy:
-#        section: Registry Values
-#        key: MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\ShutdownWithoutLogon
-#        value: 4,0
 
-#    - name: Deshabilitar hibernacion
-#      tags: Directrices de apagado de sistema1
-#      ansible.windows.win_powershell:
-#        script: |
-#          powercfg.exe /hibernate off
