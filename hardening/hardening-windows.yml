@@ -126,6 +126,7 @@
       users:
       - awx
       - admin.dev
+      - admin.qa
       - 'Remote Desktop Users'
       action: set
 
