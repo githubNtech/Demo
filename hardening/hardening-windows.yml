@@ -124,7 +124,8 @@
     win_user_right:
       name: SeRemoteInteractiveLogonRight
       users:
-      - Administrator
+      - awx
+      - admin.dev
       - 'Remote Desktop Users'
       action: set
 
