@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+  - name: Espera por 60 segundos y continua el play
+    ansible.builtin.wait_for:
+        timeout: 60
+    delegate_to: localhost
