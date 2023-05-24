@@ -138,12 +138,12 @@
 #      key: AuditSystemEvents
 #      value: 1
 
-  - name: Bitácoras de auditoría (Acceso a objetos)
-    tags: Bitácoras de seguridad
-    win_security_policy:
-      section: Event Audit
-      key: AuditObjectAccess
-      value: 1
+#  - name: Bitácoras de auditoría (Acceso a objetos)
+#    tags: Bitácoras de seguridad
+#    win_security_policy:
+#      section: Event Audit
+#      key: AuditObjectAccess
+#      value: 1
 
 
   - name: Bitácoras de auditoría (Eventos de inicio de sesion)
