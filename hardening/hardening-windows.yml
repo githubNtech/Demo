@@ -115,7 +115,7 @@
     win_user_right:
       name: SeInteractiveLogonRight
       users:
-      - Administrador
+      - Administrators
       action: set
 
 
