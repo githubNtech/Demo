@@ -67,12 +67,12 @@
       key: LockoutBadCount
       value: 5
 
-  - name: Bloqueo temporal de usuario
-    tags: Control de Acceso - Contraseñas
-    win_security_policy:
-      section: System Access
-      key: ResetLockoutCount
-      value: 30
+#  - name: Bloqueo temporal de usuario
+#    tags: Control de Acceso - Contraseñas
+#    win_security_policy:
+#      section: System Access
+#      key: ResetLockoutCount
+#      value: 30
 
   - name: Duración de bloqueo de cuenta
     tags: Control de Acceso - Contraseñas
